@@ -10,3 +10,19 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* Mobile-first responsive improvements */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Ensure touch targets are at least 44x44px on mobile */
+button, a, input, select {
+  min-height: 44px;
+}
+
+@media (max-width: 640px) {
+  button, a, input, select {
+    min-height: 48px;
+  }
+}

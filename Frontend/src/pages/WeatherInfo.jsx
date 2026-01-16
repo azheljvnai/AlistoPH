@@ -1,11 +1,12 @@
+import { Thermometer, Gauge, Wind, Droplets, Cloud, RefreshCw } from 'lucide-react'
 import { mockWeather } from '../data/mockWeather'
 
 function WeatherInfo() {
   const getAirQualityColor = (aqi) => {
-    if (aqi <= 50) return 'text-green-600 bg-green-50'
-    if (aqi <= 100) return 'text-yellow-600 bg-yellow-50'
-    if (aqi <= 150) return 'text-orange-600 bg-orange-50'
-    return 'text-red-600 bg-red-50'
+    if (aqi <= 50) return 'text-green-600 bg-green-50 border-green-200'
+    if (aqi <= 100) return 'text-yellow-600 bg-yellow-50 border-yellow-200'
+    if (aqi <= 150) return 'text-accent-orange bg-orange-50 border-orange-200'
+    return 'text-red-600 bg-red-50 border-red-200'
   }
 
   const getAirQualityLabel = (aqi) => {
@@ -15,95 +16,103 @@ function WeatherInfo() {
     return 'Unhealthy'
   }
 
+  const weatherCards = [
+    {
+      title: 'Temperature',
+      value: `${mockWeather.temperature}°C`,
+      icon: Thermometer,
+      color: 'text-primary-blue',
+      bgColor: 'bg-blue-50',
+      description: 'Current temperature'
+    },
+    {
+      title: 'Heat Index',
+      value: `${mockWeather.heatIndex}°C`,
+      icon: Gauge,
+      color: 'text-accent-orange',
+      bgColor: 'bg-orange-50',
+      description: 'Feels like temperature'
+    },
+    {
+      title: 'Air Quality',
+      value: mockWeather.airQualityIndex,
+      icon: Wind,
+      color: getAirQualityColor(mockWeather.airQualityIndex).split(' ')[0],
+      bgColor: getAirQualityColor(mockWeather.airQualityIndex).split(' ')[1],
+      description: getAirQualityLabel(mockWeather.airQualityIndex),
+      isAqi: true
+    },
+    {
+      title: 'Humidity',
+      value: `${mockWeather.humidity}%`,
+      icon: Droplets,
+      color: 'text-primary-blue',
+      bgColor: 'bg-blue-50',
+      description: 'Relative humidity'
+    },
+    {
+      title: 'Wind Speed',
+      value: `${mockWeather.windSpeed} km/h`,
+      icon: Wind,
+      color: 'text-gray-600',
+      bgColor: 'bg-gray-50',
+      description: 'Wind velocity'
+    },
+    {
+      title: 'Condition',
+      value: mockWeather.condition,
+      icon: Cloud,
+      color: 'text-gray-700',
+      bgColor: 'bg-gray-50',
+      description: 'Current weather condition'
+    }
+  ]
+
   return (
-    <div className="max-w-6xl mx-auto">
-      <h1 className="text-4xl font-bold text-gray-800 mb-8">Weather Information</h1>
+    <div className="max-w-6xl mx-auto px-2 sm:px-4">
+      <div className="mb-6 md:mb-8">
+        <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">Weather Information</h1>
+        <p className="text-gray-600 text-sm md:text-base">Current weather conditions and forecasts</p>
+      </div>
       
-      <div className="bg-white p-6 rounded-lg shadow-md mb-6">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-2xl font-semibold text-gray-700">{mockWeather.location}</h2>
-          <span className="text-sm text-gray-500">Last updated: {mockWeather.lastUpdated}</span>
+      <div className="bg-white p-4 md:p-6 rounded-xl shadow-md mb-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <h2 className="text-xl md:text-2xl font-semibold text-gray-700">{mockWeather.location}</h2>
+          <div className="flex items-center gap-2 text-sm text-gray-500">
+            <RefreshCw size={16} />
+            <span>Last updated: {mockWeather.lastUpdated}</span>
+          </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {/* Temperature Card */}
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-gray-700">Temperature</h3>
-            <span className="text-3xl">🌡️</span>
-          </div>
-          <div className="text-4xl font-bold text-blue-600 mb-2">
-            {mockWeather.temperature}°C
-          </div>
-          <p className="text-sm text-gray-500">Current temperature</p>
-        </div>
-
-        {/* Heat Index Card */}
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-gray-700">Heat Index</h3>
-            <span className="text-3xl">🔥</span>
-          </div>
-          <div className="text-4xl font-bold text-orange-600 mb-2">
-            {mockWeather.heatIndex}°C
-          </div>
-          <p className="text-sm text-gray-500">Feels like temperature</p>
-        </div>
-
-        {/* Air Quality Card */}
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-gray-700">Air Quality</h3>
-            <span className="text-3xl">💨</span>
-          </div>
-          <div className={`text-4xl font-bold mb-2 px-4 py-2 rounded-lg ${getAirQualityColor(mockWeather.airQualityIndex)}`}>
-            {mockWeather.airQualityIndex}
-          </div>
-          <p className="text-sm text-gray-500">{getAirQualityLabel(mockWeather.airQualityIndex)}</p>
-        </div>
-
-        {/* Humidity Card */}
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-gray-700">Humidity</h3>
-            <span className="text-3xl">💧</span>
-          </div>
-          <div className="text-4xl font-bold text-blue-500 mb-2">
-            {mockWeather.humidity}%
-          </div>
-          <p className="text-sm text-gray-500">Relative humidity</p>
-        </div>
-
-        {/* Wind Speed Card */}
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-gray-700">Wind Speed</h3>
-            <span className="text-3xl">💨</span>
-          </div>
-          <div className="text-4xl font-bold text-gray-600 mb-2">
-            {mockWeather.windSpeed} km/h
-          </div>
-          <p className="text-sm text-gray-500">Wind velocity</p>
-        </div>
-
-        {/* Condition Card */}
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-gray-700">Condition</h3>
-            <span className="text-3xl">☁️</span>
-          </div>
-          <div className="text-2xl font-bold text-gray-700 mb-2">
-            {mockWeather.condition}
-          </div>
-          <p className="text-sm text-gray-500">Current weather condition</p>
-        </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+        {weatherCards.map((card, index) => {
+          const Icon = card.icon
+          return (
+            <div 
+              key={index}
+              className={`${card.bgColor} p-5 md:p-6 rounded-xl shadow-md hover:shadow-lg transition-all border-2 border-transparent hover:border-primary-blue`}
+            >
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-base md:text-lg font-semibold text-gray-700">{card.title}</h3>
+                <Icon size={24} className={card.color} />
+              </div>
+              <div className={`text-3xl md:text-4xl font-bold mb-2 ${card.color}`}>
+                {card.value}
+              </div>
+              <p className="text-sm text-gray-600">{card.description}</p>
+            </div>
+          )
+        })}
       </div>
 
       {/* Weather Summary */}
-      <div className="mt-6 bg-blue-50 p-6 rounded-lg shadow-md">
-        <h3 className="text-xl font-semibold text-gray-800 mb-4">Weather Summary</h3>
-        <p className="text-gray-700">
+      <div className="mt-6 bg-gradient-to-r from-primary-blue to-primary-blue-light p-5 md:p-6 rounded-xl shadow-md text-white">
+        <h3 className="text-xl md:text-2xl font-semibold mb-4 flex items-center gap-2">
+          <Cloud size={24} />
+          Weather Summary
+        </h3>
+        <p className="text-sm md:text-base leading-relaxed opacity-95">
           The current weather in {mockWeather.location} shows {mockWeather.condition.toLowerCase()} conditions 
           with a temperature of {mockWeather.temperature}°C. The heat index is {mockWeather.heatIndex}°C, 
           making it feel warmer than the actual temperature. Air quality is {mockWeather.airQuality.toLowerCase()} 

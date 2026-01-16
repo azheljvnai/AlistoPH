@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
+import { AlertTriangle, Droplets, Info } from 'lucide-react'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 
@@ -11,7 +12,7 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
 })
 
-// Custom icons
+// Custom icons with orange and blue colors
 const faultLineIcon = new L.Icon({
   iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
@@ -51,37 +52,42 @@ function HazardMap() {
     // Ensure map container has height
     const mapContainer = document.querySelector('.leaflet-container')
     if (mapContainer) {
-      mapContainer.style.height = '600px'
+      mapContainer.style.height = '400px'
+      mapContainer.style.minHeight = '400px'
     }
   }, [])
 
   return (
-    <div className="max-w-7xl mx-auto">
-      <h1 className="text-4xl font-bold text-gray-800 mb-8">Hazard Map</h1>
+    <div className="max-w-7xl mx-auto px-2 sm:px-4">
+      <div className="mb-6 md:mb-8">
+        <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">Hazard Map</h1>
+        <p className="text-gray-600 text-sm md:text-base">Interactive map showing fault lines and flood-prone areas</p>
+      </div>
       
-      <div className="bg-white p-6 rounded-lg shadow-md mb-6">
+      <div className="bg-white p-4 md:p-6 rounded-xl shadow-md mb-6">
         <div className="flex flex-wrap gap-4 mb-4">
           <div className="flex items-center gap-2">
-            <div className="w-4 h-4 bg-red-500 rounded-full"></div>
-            <span className="text-sm text-gray-700">Fault Lines</span>
+            <div className="w-4 h-4 bg-accent-orange rounded-full border-2 border-accent-orange-dark"></div>
+            <span className="text-sm md:text-base text-gray-700 font-medium">Fault Lines</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-4 h-4 bg-blue-500 rounded-full"></div>
-            <span className="text-sm text-gray-700">Flood-Prone Areas</span>
+            <div className="w-4 h-4 bg-primary-blue rounded-full border-2 border-primary-blue-dark"></div>
+            <span className="text-sm md:text-base text-gray-700 font-medium">Flood-Prone Areas</span>
           </div>
         </div>
-        <p className="text-gray-600 text-sm">
-          This map shows known fault lines and flood-prone areas in the Philippines. 
-          Click on markers to see more information.
+        <p className="text-gray-600 text-sm md:text-base flex items-start gap-2">
+          <Info size={18} className="text-primary-blue mt-0.5 flex-shrink-0" />
+          This map shows known fault lines and flood-prone areas in the Philippines. Click on markers to see more information.
         </p>
       </div>
 
-      <div className="bg-white rounded-lg shadow-md overflow-hidden">
+      <div className="bg-white rounded-xl shadow-md overflow-hidden mb-6">
         <MapContainer
           center={[14.5995, 121.0000]}
           zoom={11}
-          style={{ height: '600px', width: '100%' }}
+          style={{ height: '400px', width: '100%' }}
           scrollWheelZoom={true}
+          className="z-0"
         >
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -96,10 +102,13 @@ function HazardMap() {
               icon={faultLineIcon}
             >
               <Popup>
-                <div>
-                  <h3 className="font-semibold text-red-600 mb-1">{fault.name}</h3>
-                  <p className="text-sm text-gray-700">{fault.description}</p>
-                  <p className="text-xs text-gray-500 mt-1">
+                <div className="min-w-[200px]">
+                  <div className="flex items-center gap-2 mb-2">
+                    <AlertTriangle size={18} className="text-accent-orange" />
+                    <h3 className="font-semibold text-accent-orange text-base">{fault.name}</h3>
+                  </div>
+                  <p className="text-sm text-gray-700 mb-2">{fault.description}</p>
+                  <p className="text-xs text-gray-500">
                     Coordinates: {fault.lat.toFixed(4)}, {fault.lng.toFixed(4)}
                   </p>
                 </div>
@@ -115,10 +124,13 @@ function HazardMap() {
               icon={floodIcon}
             >
               <Popup>
-                <div>
-                  <h3 className="font-semibold text-blue-600 mb-1">{area.name}</h3>
-                  <p className="text-sm text-gray-700">{area.description}</p>
-                  <p className="text-xs text-gray-500 mt-1">
+                <div className="min-w-[200px]">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Droplets size={18} className="text-primary-blue" />
+                    <h3 className="font-semibold text-primary-blue text-base">{area.name}</h3>
+                  </div>
+                  <p className="text-sm text-gray-700 mb-2">{area.description}</p>
+                  <p className="text-xs text-gray-500">
                     Coordinates: {area.lat.toFixed(4)}, {area.lng.toFixed(4)}
                   </p>
                 </div>
@@ -129,23 +141,29 @@ function HazardMap() {
       </div>
 
       {/* Legend and Information */}
-      <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-xl font-semibold text-gray-800 mb-4">Fault Lines</h3>
-          <ul className="space-y-2">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+        <div className="bg-white p-5 md:p-6 rounded-xl shadow-md">
+          <h3 className="text-lg md:text-xl font-semibold text-gray-800 mb-4 flex items-center gap-2">
+            <AlertTriangle size={20} className="text-accent-orange" />
+            Fault Lines
+          </h3>
+          <ul className="space-y-3">
             {faultLines.map(fault => (
-              <li key={fault.id} className="text-gray-700">
-                <span className="font-medium">{fault.name}:</span> {fault.description}
+              <li key={fault.id} className="text-sm md:text-base text-gray-700 border-l-4 border-accent-orange pl-3">
+                <span className="font-semibold">{fault.name}:</span> {fault.description}
               </li>
             ))}
           </ul>
         </div>
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-xl font-semibold text-gray-800 mb-4">Flood-Prone Areas</h3>
-          <ul className="space-y-2">
+        <div className="bg-white p-5 md:p-6 rounded-xl shadow-md">
+          <h3 className="text-lg md:text-xl font-semibold text-gray-800 mb-4 flex items-center gap-2">
+            <Droplets size={20} className="text-primary-blue" />
+            Flood-Prone Areas
+          </h3>
+          <ul className="space-y-3">
             {floodProneAreas.map(area => (
-              <li key={area.id} className="text-gray-700">
-                <span className="font-medium">{area.name}:</span> {area.description}
+              <li key={area.id} className="text-sm md:text-base text-gray-700 border-l-4 border-primary-blue pl-3">
+                <span className="font-semibold">{area.name}:</span> {area.description}
               </li>
             ))}
           </ul>
