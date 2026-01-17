@@ -26,3 +26,18 @@ button, a, input, select {
     min-height: 48px;
   }
 }
+
+/* Hide scrollbar for horizontal scrolling nav on mobile */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Improve touch responsiveness */
+.touch-manipulation {
+  touch-action: manipulation;
+}

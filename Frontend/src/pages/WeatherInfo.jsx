@@ -2,6 +2,7 @@ import { Thermometer, Gauge, Wind, Droplets, Cloud, RefreshCw } from 'lucide-rea
 import { mockWeather } from '../data/mockWeather'
 
 function WeatherInfo() {
+
   const getAirQualityColor = (aqi) => {
     if (aqi <= 50) return 'text-green-600 bg-green-50 border-green-200'
     if (aqi <= 100) return 'text-yellow-600 bg-yellow-50 border-yellow-200'
@@ -71,14 +72,14 @@ function WeatherInfo() {
   return (
     <div className="max-w-6xl mx-auto px-2 sm:px-4">
       <div className="mb-6 md:mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">Weather Information</h1>
+        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Weather Information</h1>
         <p className="text-gray-600 text-sm md:text-base">Current weather conditions and forecasts</p>
       </div>
       
-      <div className="bg-white p-4 md:p-6 rounded-xl shadow-md mb-6">
+      <div className="bg-white p-4 md:p-6 rounded-xl shadow-lg mb-6 border border-gray-100">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-          <h2 className="text-xl md:text-2xl font-semibold text-gray-700">{mockWeather.location}</h2>
-          <div className="flex items-center gap-2 text-sm text-gray-500">
+          <h2 className="text-xl md:text-2xl font-bold text-gray-900">{mockWeather.location}</h2>
+          <div className="flex items-center gap-2 text-sm text-gray-600">
             <RefreshCw size={16} />
             <span>Last updated: {mockWeather.lastUpdated}</span>
           </div>
@@ -91,24 +92,24 @@ function WeatherInfo() {
           return (
             <div 
               key={index}
-              className={`${card.bgColor} p-5 md:p-6 rounded-xl shadow-md hover:shadow-lg transition-all border-2 border-transparent hover:border-primary-blue`}
+              className={`${card.bgColor} p-5 md:p-6 rounded-xl shadow-md hover:shadow-xl transition-all border-2 border-transparent hover:border-primary-blue`}
             >
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-base md:text-lg font-semibold text-gray-700">{card.title}</h3>
-                <Icon size={24} className={card.color} />
+                <h3 className="text-base md:text-lg font-bold text-gray-800">{card.title}</h3>
+                <Icon size={26} className={card.color} />
               </div>
               <div className={`text-3xl md:text-4xl font-bold mb-2 ${card.color}`}>
                 {card.value}
               </div>
-              <p className="text-sm text-gray-600">{card.description}</p>
+              <p className="text-sm text-gray-600 font-medium">{card.description}</p>
             </div>
           )
         })}
       </div>
 
       {/* Weather Summary */}
-      <div className="mt-6 bg-gradient-to-r from-primary-blue to-primary-blue-light p-5 md:p-6 rounded-xl shadow-md text-white">
-        <h3 className="text-xl md:text-2xl font-semibold mb-4 flex items-center gap-2">
+      <div className="mt-6 bg-gradient-to-r from-primary-blue via-primary-blue-light to-primary-blue-dark p-5 md:p-6 rounded-xl shadow-lg text-white">
+        <h3 className="text-xl md:text-2xl font-bold mb-4 flex items-center gap-2">
           <Cloud size={24} />
           Weather Summary
         </h3>

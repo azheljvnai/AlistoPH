@@ -33,16 +33,16 @@ function EmergencyHotlines() {
   return (
     <div className="max-w-6xl mx-auto px-2 sm:px-4">
       <div className="mb-6 md:mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">Emergency Hotlines & Evacuation Centers</h1>
+        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Emergency Hotlines & Evacuation Centers</h1>
         <p className="text-gray-600 text-sm md:text-base">Find emergency contacts and evacuation centers near you</p>
       </div>
       
       {/* Search and Filters */}
-      <div className="bg-white p-4 md:p-6 rounded-xl shadow-md mb-6">
+      <div className="bg-white p-4 md:p-6 rounded-xl shadow-lg mb-6 border border-gray-100">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <div className="sm:col-span-2 lg:col-span-1">
-            <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
-              <Search size={16} />
+            <label className="block text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+              <Search size={18} className="text-primary-blue" />
               Search
             </label>
             <input
@@ -50,18 +50,18 @@ function EmergencyHotlines() {
               placeholder="Search by name, address, or phone..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-blue focus:border-primary-blue transition-all"
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-blue focus:border-primary-blue transition-all"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
-              <Filter size={16} />
+            <label className="block text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+              <Filter size={18} className="text-primary-blue" />
               Location
             </label>
             <select
               value={selectedLocation}
               onChange={(e) => setSelectedLocation(e.target.value)}
-              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-blue focus:border-primary-blue transition-all"
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-blue focus:border-primary-blue transition-all"
             >
               {uniqueLocations.map(loc => (
                 <option key={loc} value={loc}>{loc}</option>
@@ -69,14 +69,14 @@ function EmergencyHotlines() {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
-              <Filter size={16} />
+            <label className="block text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+              <Filter size={18} className="text-primary-blue" />
               Type
             </label>
             <select
               value={selectedType}
               onChange={(e) => setSelectedType(e.target.value)}
-              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-blue focus:border-primary-blue transition-all"
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-blue focus:border-primary-blue transition-all"
             >
               {uniqueTypes.map(type => (
                 <option key={type} value={type}>{type}</option>
@@ -87,11 +87,11 @@ function EmergencyHotlines() {
       </div>
 
       {/* Locations List */}
-      <div className="space-y-4">
+      <div className="space-y-5">
         {filteredLocations.length === 0 ? (
-          <div className="bg-white p-8 md:p-12 rounded-xl shadow-md text-center">
-            <Phone size={48} className="mx-auto text-gray-400 mb-4" />
-            <p className="text-gray-500 text-lg">No locations found matching your criteria.</p>
+          <div className="bg-white p-10 md:p-14 rounded-xl shadow-lg text-center border border-gray-100">
+            <Phone size={56} className="mx-auto text-gray-300 mb-4" />
+            <p className="text-gray-500 text-lg font-medium">No locations found matching your criteria.</p>
           </div>
         ) : (
           filteredLocations.map(location => {
@@ -99,16 +99,16 @@ function EmergencyHotlines() {
             return (
               <div
                 key={location.id}
-                className="bg-white p-5 md:p-6 rounded-xl shadow-md hover:shadow-lg transition-all border-l-4 border-primary-blue"
+                className="bg-white p-5 md:p-6 rounded-xl shadow-md hover:shadow-xl transition-all border-l-4 border-primary-blue border border-gray-100"
               >
                 <div className="flex flex-col gap-4">
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                     <div className="flex items-center gap-3 flex-wrap">
-                      <h2 className="text-lg md:text-xl font-semibold text-gray-800">
+                      <h2 className="text-lg md:text-xl font-bold text-gray-900">
                         {location.name}
                       </h2>
                       <span
-                        className={`px-3 py-1 rounded-full text-xs md:text-sm font-medium border flex items-center gap-1.5 ${getTypeColor(location.type)}`}
+                        className={`px-3 py-1.5 rounded-full text-xs md:text-sm font-semibold border flex items-center gap-1.5 ${getTypeColor(location.type)}`}
                       >
                         <TypeIcon size={14} />
                         {location.type}
